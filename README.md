@@ -73,12 +73,41 @@ dinamik olarak hesaplanır ve ekranda gösterilir.
 ---
 ### EKRAN GÖRÜNTÜLERİ
 ![HARCAMA SAYFASI](./EKRANGÖRÜNTÜLERİ/anaekran.png)
+
+##Kullanıcı bu ekranda harcama adı, tarih, tutar ve kategori bilgilerini girerek yeni harcama ekleyebilir.
+
+
 ![HATA BİLGİ MESAJI](./EKRANGÖRÜNTÜLERİ/BİLGİMESAJI3.png)
+
+##Eksik bilgi girildiğinde kullanıcıya uyarı mesajı gösterilir.
+
+
 ![TAKVİM](./EKRANGÖRÜNTÜLERİ/TAKVİM.png)
+
+##Kullanıcı harcama tarihini takvim üzerinden seçebilir.
+
+
 ![KATAGORİ](./EKRANGÖRÜNTÜLERİ/KATAGORİ.png)
+
+##Kullanıcı harcamayı “İstek” veya “İhtiyaç” olarak kategorize edebilir.
+
+
 ![EKLENDİ BİLGİ MESAJI](./EKRANGÖRÜNTÜLERİ/BİLGİMESAJI.png)
+
+
+##Harcama eklendiğinde kullanıcıya kısa süreli bir bilgilendirme mesajı (Toast) gösterilir
+
+
 ![SİLME](./EKRANGÖRÜNTÜLERİ/SİLMEONAYI.png)
+
+##Harcama silinmeden önce kullanıcıdan onay alınır.
+
+
 ![SİLME BİLGİ MESAJI](./EKRANGÖRÜNTÜLERİ/BİLGİMESAJI2.png)
+
+
+##Harcama eksildiğinde kullanıcıya kısa süreli bir bilgilendirme mesajı (Toast) gösterilir
+
 
 ### 💾 Veri Saklama
 

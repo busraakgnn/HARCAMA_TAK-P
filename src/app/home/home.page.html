@@ -1,8 +1,11 @@
-<ion-header>
-  <ion-toolbar color="warning">
-    <ion-title class="ion-text-center">Harcama Takibi</ion-title>
-  </ion-toolbar>
-</ion-header>
+<!-- ÜST ŞERİT -->
+<ion-header> <!-- Sayfanın en üst kısmı -->
+  <ion-toolbar color="warning"> <!-- Üst barın rengi ve görünümü -->
+    <ion-title class="ion-text-center">
+      Harcama Takibi
+    </ion-title> <!-- Sayfanın başlığı -->
+  </ion-toolbar> <!-- Üst şerit şekillendirilir -->
+</ion-header> <!-- Header (üst alan) biter -->
 
 <ion-content class="ion-padding">
   <!-- GİRİŞ FORMU -->
@@ -11,73 +14,125 @@
       <ion-input label="Harcama Adı" [(ngModel)]="ad" type="text"></ion-input>
     </ion-item>
 
-    <!-- TARİH SEÇİCİ (TUTARIN ÜSTÜNDE) -->
-    <ion-item>
-      <ion-label>Tarih</ion-label>
-      <ion-datetime-button datetime="date"></ion-datetime-button>
-      <ion-modal [keepContentsMounted]="true">
-        <ng-template>
-          <ion-datetime id="date" presentation="date" [(ngModel)]="tarih"></ion-datetime>
-        </ng-template>
-      </ion-modal>
-    </ion-item>
+    <!-- TARİH SEÇİCİ -->
+<ion-item> <!-- Satır oluşturur -->
+  <ion-label>Tarih</ion-label> <!-- Kullanıcıya buranın tarih olduğunu gösterir -->
+  <ion-datetime-button datetime="date"></ion-datetime-button> <!-- Buna basınca takvim açılır -->
+  <ion-modal [keepContentsMounted]="true"> <!-- Takvimin açıldığı pencere -->
+    <ng-template> <!-- Modal içinde gösterilecek alan -->
+      <ion-datetime 
+        id="date" 
+        presentation="date" 
+        [(ngModel)]="tarih">
+      </ion-datetime> <!-- Kullanıcı tarih seçer ve "tarih" değişkenine kaydedilir -->
+    </ng-template> <!-- İçerik biter -->
+  </ion-modal> <!-- Modal kapanır -->
+</ion-item> <!-- Satır biter -->
 
-    <ion-item>
-      <ion-input label="Tutar" [(ngModel)]="fiyat" type="number"></ion-input>
-    </ion-item>
-    
-    <ion-item>
-      <ion-select label="Kategori" placeholder="Seçiniz" [(ngModel)]="kategori">
-        <ion-select-option value="istek">İstek</ion-select-option>
-        <ion-select-option value="ihtiyac">İhtiyaç</ion-select-option>
-      </ion-select>
-    </ion-item>
-    
+    <!-- TUTAR GİRİŞİ -->
+<ion-item> <!-- Satır oluşturur -->
+  <ion-input 
+    label="Tutar" 
+    [(ngModel)]="fiyat" 
+    type="number">
+  </ion-input> <!-- Kullanıcı para girer ve "fiyat" değişkenine aktarılır -->
+</ion-item> <!-- Satır biter -->
+
+
+<!-- KATEGORİ SEÇİMİ -->
+<ion-item> <!-- Satır oluşturur -->
+  <ion-select 
+    label="Kategori" 
+    placeholder="Seçiniz" 
+    [(ngModel)]="kategori">
+    <!-- Kullanıcının seçenekler arasından seçim yapmasını sağlar -->
+    <ion-select-option value="istek">İstek</ion-select-option> <!-- İstek seçeneği -->
+    <ion-select-option value="ihtiyac">İhtiyaç</ion-select-option> <!-- İhtiyaç seçeneği -->
+  </ion-select>
+</ion-item> <!-- Satır biter -->
     <ion-button expand="block" color="warning" (click)="ekle()">EKLE</ion-button>
     
-    <ion-card color="warning" class="ion-text-center ion-padding" style="margin-top: 10px;">
-      <h3 style="margin: 0;">Genel Toplam: {{ genelToplam }} ₺</h3>
-    </ion-card>
+    <!-- GENEL TOPLAM -->
+<ion-card 
+  color="warning" 
+  class="ion-text-center ion-padding" 
+  style="margin-top: 10px;">
+  <h3 style="margin: 0;">
+    Genel Toplam: {{ genelToplam }} ₺
+  </h3>
+</ion-card>
+<!-- Tüm harcamaların toplamı burada gösterilir -->
+<!-- {{ }} ile değişken ekrana yazdırılır -->
+
+</ion-card> <!-- Ana kart biter -->
+
+ <!-- LİSTE ALANI -->
+<ion-grid> <!-- Sayfayı sütunlara böler -->
+  <ion-row> <!-- Satır oluşturur -->
+
+    <!-- İHTİYAÇLAR -->
+    <ion-col size="6"> <!-- Ekranın yarısını kaplar -->
+      <ion-card color="success" class="ion-text-center">
+        <small>İhtiyaçlar</small> <!-- Başlık -->
+        <h5>{{ ihtiyacToplam }} ₺</h5>
+        <!-- İhtiyaç harcamalarının toplamı -->
+      </ion-card>
+      <ion-list lines="none"> <!-- Liste alanı -->
+        <ion-item *ngFor="let h of ihtiyaclar">
+        <!-- ihtiyaclar dizisini tek tek dolaşır -->
+          <ion-label>
+            <h3>{{ h.ad }}</h3> 
+            <!-- Harcama adı -->
+            <p>{{ h.fiyat }} ₺</p> 
+            <!-- Harcama tutarı -->
+            <ion-note color="medium" style="font-size: 12px;">
+              {{ formatliTarih(h.tarih) }}
+            </ion-note>
+            <!-- Tarihi formatlayıp gösterir -->
+          </ion-label>
+          <ion-icon 
+            name="close-circle" 
+            color="danger" 
+            slot="end"
+            (click)="onayliSil(h, 'ihtiyac')"
+            style="font-size: 22px; cursor: pointer;">
+          </ion-icon>
+          <!-- Bu ikona basınca silme işlemi yapılır -->
+        </ion-item>
+      </ion-list>
+    </ion-col> <!-- İhtiyaçlar bölümü biter -->
+
+ <!-- İSTEKLER -->
+<ion-col size="6"> <!-- Ekranın yarısını kaplar -->
+  <ion-card color="tertiary" class="ion-text-center">
+    <small>İstekler</small> <!-- Başlık -->
+    <h5>{{ istekToplam }} ₺</h5>
+    <!-- İstek harcamalarının toplamı -->
   </ion-card>
-
-  <!-- LİSTELER -->
-  <ion-grid>
-    <ion-row>
-      <!-- İhtiyaçlar -->
-      <ion-col size="6">
-        <ion-card color="success" class="ion-text-center">
-          <small>İhtiyaçlar</small>
-          <h5>{{ ihtiyacToplam }} ₺</h5>
-        </ion-card>
-        <ion-list lines="none">
-          <ion-item *ngFor="let h of ihtiyaclar">
-            <ion-label>
-              <h3>{{ h.ad }}</h3>
-              <p>{{ h.fiyat }} ₺</p>
-              <ion-note color="medium" style="font-size: 12px;">{{ formatliTarih(h.tarih) }}</ion-note>
-            </ion-label>
-            <ion-icon name="close-circle" color="danger" slot="end" (click)="onayliSil(h, 'ihtiyac')" style="font-size: 22px; cursor: pointer;"></ion-icon>
-          </ion-item>
-        </ion-list>
-      </ion-col>
-
-      <!-- İstekler -->
-      <ion-col size="6">
-        <ion-card color="tertiary" class="ion-text-center">
-          <small>İstekler</small>
-          <h5>{{ istekToplam }} ₺</h5>
-        </ion-card>
-        <ion-list lines="none">
-          <ion-item *ngFor="let h of istekler">
-            <ion-label>
-              <h3>{{ h.ad }}</h3>
-              <p>{{ h.fiyat }} ₺</p>
-              <ion-note color="medium" style="font-size: 12px;">{{ formatliTarih(h.tarih) }}</ion-note>
-            </ion-label>
-            <ion-icon name="close-circle" color="danger" slot="end" (click)="onayliSil(h, 'istek')" style="font-size: 22px; cursor: pointer;"></ion-icon>
-          </ion-item>
-        </ion-list>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-</ion-content>
+  <ion-list lines="none"> <!-- Liste alanı -->
+    <ion-item *ngFor="let h of istekler">
+    <!-- istekler dizisini tek tek dolaşır -->
+      <ion-label>
+        <h3>{{ h.ad }}</h3> 
+        <!-- Harcama adı -->
+        <p>{{ h.fiyat }} ₺</p> 
+        <!-- Harcama tutarı -->
+        <ion-note color="medium" style="font-size: 12px;">
+          {{ formatliTarih(h.tarih) }}
+        </ion-note>
+        <!-- Tarihi düzenleyip gösterir -->
+      </ion-label>
+      <ion-icon 
+        name="close-circle" 
+        color="danger" 
+        slot="end"
+        (click)="onayliSil(h, 'istek')"
+        style="font-size: 22px; cursor: pointer;">
+      </ion-icon>
+      <!-- Bu ikona basınca harcama silinir -->
+    </ion-item>
+  </ion-list>
+</ion-col> <!-- İstekler bölümü biter -->
+</ion-row> <!-- Satır biter -->
+</ion-grid> <!-- Grid biter -->
+</ion-content> <!-- Sayfa içeriği biter -->
