@@ -1,0 +1,83 @@
+<ion-header>
+  <ion-toolbar color="warning">
+    <ion-title class="ion-text-center">Harcama Takibi</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- GİRİŞ FORMU -->
+  <ion-card>
+    <ion-item>
+      <ion-input label="Harcama Adı" [(ngModel)]="ad" type="text"></ion-input>
+    </ion-item>
+
+    <!-- TARİH SEÇİCİ (TUTARIN ÜSTÜNDE) -->
+    <ion-item>
+      <ion-label>Tarih</ion-label>
+      <ion-datetime-button datetime="date"></ion-datetime-button>
+      <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime id="date" presentation="date" [(ngModel)]="tarih"></ion-datetime>
+        </ng-template>
+      </ion-modal>
+    </ion-item>
+
+    <ion-item>
+      <ion-input label="Tutar" [(ngModel)]="fiyat" type="number"></ion-input>
+    </ion-item>
+    
+    <ion-item>
+      <ion-select label="Kategori" placeholder="Seçiniz" [(ngModel)]="kategori">
+        <ion-select-option value="istek">İstek</ion-select-option>
+        <ion-select-option value="ihtiyac">İhtiyaç</ion-select-option>
+      </ion-select>
+    </ion-item>
+    
+    <ion-button expand="block" color="warning" (click)="ekle()">EKLE</ion-button>
+    
+    <ion-card color="warning" class="ion-text-center ion-padding" style="margin-top: 10px;">
+      <h3 style="margin: 0;">Genel Toplam: {{ genelToplam }} ₺</h3>
+    </ion-card>
+  </ion-card>
+
+  <!-- LİSTELER -->
+  <ion-grid>
+    <ion-row>
+      <!-- İhtiyaçlar -->
+      <ion-col size="6">
+        <ion-card color="success" class="ion-text-center">
+          <small>İhtiyaçlar</small>
+          <h5>{{ ihtiyacToplam }} ₺</h5>
+        </ion-card>
+        <ion-list lines="none">
+          <ion-item *ngFor="let h of ihtiyaclar">
+            <ion-label>
+              <h3>{{ h.ad }}</h3>
+              <p>{{ h.fiyat }} ₺</p>
+              <ion-note color="medium" style="font-size: 12px;">{{ formatliTarih(h.tarih) }}</ion-note>
+            </ion-label>
+            <ion-icon name="close-circle" color="danger" slot="end" (click)="onayliSil(h, 'ihtiyac')" style="font-size: 22px; cursor: pointer;"></ion-icon>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+
+      <!-- İstekler -->
+      <ion-col size="6">
+        <ion-card color="tertiary" class="ion-text-center">
+          <small>İstekler</small>
+          <h5>{{ istekToplam }} ₺</h5>
+        </ion-card>
+        <ion-list lines="none">
+          <ion-item *ngFor="let h of istekler">
+            <ion-label>
+              <h3>{{ h.ad }}</h3>
+              <p>{{ h.fiyat }} ₺</p>
+              <ion-note color="medium" style="font-size: 12px;">{{ formatliTarih(h.tarih) }}</ion-note>
+            </ion-label>
+            <ion-icon name="close-circle" color="danger" slot="end" (click)="onayliSil(h, 'istek')" style="font-size: 22px; cursor: pointer;"></ion-icon>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
