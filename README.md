@@ -72,7 +72,7 @@ dinamik olarak hesaplanır ve ekranda gösterilir.
 
 ---
 ### EKRAN GÖRÜNTÜLERİ
-![HARCAMA SAYFASI](./EKRANGÖRÜNTÜLERİ/anaekran.png)
+![HARCAMA SAYFASI](./EKRANGÖRÜNTÜLERİ/giriş.png)
 
 ##Kullanıcı bu ekranda harcama adı, tarih, tutar ve kategori bilgilerini girerek yeni harcama ekleyebilir.
 
